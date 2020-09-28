@@ -1,0 +1,35 @@
+{%extends 'food/home.html'%}
+
+
+{% block maincontent %}
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+    	{% if object %}
+      <p class="card-title">food Update</p>
+      {% else %}
+      <p class=" card-title ">food Create</p>
+      {% endif %}        
+
+  		<form  {% if object %} action="{% url 'food_app:admin-food-update' object.id %}"
+  		       {% else %} action="{% url 'food_app:admin-food-create' %}"
+  		       {% endif %}
+  		       method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{form.media}}
+        {{ form.as_p }}
+      	<div class='form-group'>
+            <p>
+              <label for="gallery"> Gallery:</label><input class="form-control" id="gallery" name="files" type="file" size="50" accept="image/*" multiple>
+            </p>
+        </div>
+        <div class="form-group">
+            <input type="submit" id="submit" class="btn btn-success btn-" value="Save">
+            <a href="{% url 'food_app:admin-food-list' %}" class="btn btn-primary">Cancel</a>
+        </div>
+      </form>
+      
+    </div>
+  </div>
+</div>
+
+{%endblock%}

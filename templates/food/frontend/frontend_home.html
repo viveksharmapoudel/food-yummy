@@ -1,0 +1,275 @@
+{% extends 'food/frontend/frontend_base.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <header class="header-section">
+        <div class="container">
+            <div class="row justify-content-md-center">
+            	<div class="col-md-6 order-lg-4 ">
+	                <a href="{%url 'food_app:index' %}"><img src="{%static 'frontend/img/nepali-parikar.png'%}" class="img-fluid" alt=""></a>
+            	</div>
+            </div>
+            <div class="nav-menu">
+                <nav class="main-menu mobile-menu">
+                    <ul>
+                        <li class="active"><a href="#">Home</a></li>
+
+                        <!--
+                        <li><a href="#">Pages</a>
+                            <ul class="sub-menu">
+                                <li><a href="about-me.html">About Me</a></li>
+                                <li><a href="categories.html">Categories</a></li>
+                                <li><a href="recipe.html">Recipe</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </li>
+
+                        -->
+                        
+                        <li><a href="{% url 'food_app:contact' %}">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-right search-switch">
+                    <i class="fa fa-search"></i>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+   {% block maincontent %}
+
+    <!-- Page Top Recipe Section Begin -->
+    <section class="page-top-recipe">
+        <div class="container">
+            <div class="row">
+
+            	<!--this is the headline-->
+                <div class="col-lg-6 order-lg-2">
+                    <div class="pt-recipe-item large-item">
+                    	<a href="{% url 'food_app:frontend-recipe' headline_recipe.id %}">
+	                        <div class="pt-recipe-img set-bg" data-setbg=
+	                        						{%if headline_recipe.food_main_image%}
+	                        						{{headline_recipe.food_main_image.url}}
+	                        						{%else%}
+	                        						{%static 'frontend/img/no_image.jpg'%}
+	                        						{%endif%}>
+	                            <i class="fa fa-plus"></i>
+	                        </div>
+                    	</a>
+
+                		{%if headline_recipe%}
+                        <div class="pt-recipe-text">
+                            <span>{{headline_recipe.created_at}}</span>
+                            <h3>{{headline_recipe.name}}</h3>
+                        </div>
+                		{%endif%}
+
+                    </div>
+                </div>
+                <!--end of headline recipe-->
+                <!--side recipe-->
+                {% if sideline_recipe %}
+                {% for recipe in sideline_recipe %}
+
+                {%if forloop.counter == 1 %}
+             	<div class="col-lg-3 col-md-6 order-lg-1">
+                {% endif %}
+               	{%if forloop.counter == 3%}
+		       	<div class="col-lg-3 col-md-6 order-lg-3">
+            	{%endif %}
+      				<a href="{%url 'food_app:frontend-recipe' recipe.id%}">
+	            	    <div class="pt-recipe-item">
+	                    	<div class="pt-recipe-img set-bg" data-setbg=
+	                    						{%if recipe.food_main_image %}
+	                    						{{recipe.food_main_image.url}}
+	                    						{%else%}
+	                    						{%static 'frontend/img/no_image.jpg'%}
+	                    						{%endif%}>
+	                        	<i class="fa fa-plus"></i>
+	                	    </div>
+	                    	<div class="pt-recipe-text">
+	                        	<h4>{{recipe.name}}</h4>
+	                    	</div>
+	                	</div>      					
+      				</a>      	    
+
+                {%if forloop.counter|divisibleby:2  %}
+            	</div>
+            	{%endif%}
+
+            	{% endfor %}
+                {% endif %}
+
+                <!--end of side recipe-->
+            </div>
+        </div>
+    </section>
+    <!-- Page Top Recipe Section End -->
+
+    <!-- Categories Feature Recipe Section Begin -->
+    <section class="categories-feature-recipe spad">
+        <div class="section-title">
+            <h5>Featured Recipes</h5>
+        </div>
+        <div class="container po-relative">
+            <div class="plus-icon">
+                <i class="fa fa-plus"></i>
+            </div>
+            {%if featured_recipes %}
+            <div class="row">
+            {% for recipe in featured_recipes %}
+
+            	{% if forloop.first %}
+                <div class="col-lg-7">
+            	{%elif forloop.counter == 5%}
+                <div class="col-lg-4 offset-lg-1">            	
+            	{%endif%}
+
+                    <!--feature left big section-->
+	            	{%if forloop.counter <= 4 %}
+	            	<div class="cfr-item">
+                        <a href="{%url 'food_app:frontend-recipe' recipe.id %}">
+                        <div class="cfr-item-img set-bg" data-setbg="
+                        			{% if recipe.food_main_image%} 	
+                        				{{recipe.food_main_image.url}}
+                        			{%else%}
+                        				{%static 'frontend/img/no_image.jpg' %}
+                        			{%endif%}
+                        			">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                        </a>
+                        <div class="cfr-item-text">
+                        	<a href="{%url 'food_app:frontend-category' recipe.food_category.id %}">
+                        		<div class="cat-name">{{recipe.food_category}}</div>
+                        	</a>
+                        	
+	                        <a href="{%url 'food_app:frontend-recipe' recipe.id %}">
+                                <h4>{{recipe.name}}</h4>
+		                        <p>{{recipe.description|truncatechars_html:100|safe}}</p>
+                 			</a>
+                        </div>
+                    </div>
+
+                    <!--feature right side small section-->
+	            	{% else %}
+	            	<div class="cfr-small-item">
+                        <a href="{%url 'food_app:frontend-recipe' recipe.id %}">
+                        	<img src="{% if recipe.food_main_image%} 	
+                        				{{recipe.food_main_image.url}}
+                        			  {%else%}
+                        				{%static 'frontend/img/no_image.jpg' %}
+                        			  {%endif%}
+                        			" alt="">
+                        </a>
+                        <div class="cfr-small-text">
+                            <div class="cat-name">{{recipe.food_category}}</div>
+                            <h6>{{recipe.name}}</h6>
+                        </div>
+                    </div>
+	            	{% endif %}
+
+            	{%if forloop.counter == 4 %}
+            	</div> <!-- big section end div-->
+            	{% elif forloop.last %}
+            	</div> <!-- right  small section end div-->
+            	{% endif %}
+
+            {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    <!-- Categories Feature Recipe Section End -->
+
+    <!-- Top Recipe this week Section End -->
+    <!-- Categories Filter Section Begin -->
+    <div class="categories-filter-section spad">
+        <div class="container">
+        	{% if  categories%}
+        		<!--for category heading-->
+            	<div class="row">
+            		<div class="col-lg-12 text-center">
+                    <div class="filter-item categories">
+
+                        <ul>
+  				      		{% for category in categories %}
+  				      			{%if forloop.first %} 
+                            	<li class="active callajax" data-catid="{{category.id}}">
+                            	{%else%}
+                            	<li class="callajax" data-catid="{{category.id}}">
+                            	{% endif %}
+		                            {{category.name}}
+    							</li>
+        					{% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+            {% endif %}
+		       	       
+    		{%if first_category_data %}
+        	<div class="cf-filter categoryfood" >
+
+        		{% for food in first_category_data|slice:":5" %}
+                <div class="cf-item mix all mor">
+                	<a href="{%url 'food_app:frontend-recipe' food.id %}">
+						<div class="cf-item-pic">
+	                        <img src="{{food.food_main_image.url}}" alt="">
+	                    </div>
+	                    <div class="cf-item-text">
+	                        <h5>{{food.name}}</h5>
+	                    </div>
+                	</a>
+                    
+                </div>
+                {% endfor%}
+        	</div>
+        	{% endif %}
+
+        </div>
+    </div>
+    <!-- Categories Filter Section End -->
+    {%endblock %}
+{% endblock %}
+
+{% block javascript %}
+
+  <script>
+	  $(document).ready(function(e){
+
+		$(".categories-filter-section .filter-item ul li").on('click', function () {
+
+			var select= $(this);
+			if (select.attr("data-catid")){
+				var food_id=select.attr("data-catid");
+			}
+			else{
+				var food_id=None;
+			}
+			// var food_id =select.attr("data-catid");
+
+		  $.ajax({type:'GET',
+		  		  url:"/category-data/", 
+		  		  data:{
+		  		  	food_id:food_id,
+		  		  },
+		  		  success: function(result_html){
+		    		$(".categoryfood").html(result_html);
+
+		  	}});
+	    });
+	  });
+	
+	</script>
+{%endblock %}
+

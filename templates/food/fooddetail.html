@@ -1,0 +1,97 @@
+{% extends "food/home.html" %}
+
+{% block maincontent %}    
+  <div class="card">
+    <div class="card-body">
+     <h4 class="card-title">Food Detail</h4>
+        
+        <!--Section for the main image-->
+        <div class="container mb-3">
+          <div class="row justify-content-center">
+              <div class="col-4">
+                {% if object.food_main_image %}
+                  <img src=" {{object.food_main_image.url}}" class="img-fluid" alt="{{object.food_main_image}}"/>
+                {% endif %} 
+              </div>
+          </div>
+        </div>
+
+        <!--Section for the main details-->
+        <table class="table table-striped table-hover" >
+          <tbody>
+            <tr>
+                <td><b>Name</b></td>
+                <td>{{ object.name }}</td>
+            </tr>
+            <tr>
+                <td><b>Food Category</b></td>
+                <td>{{ object.food_category }}</td>
+            </tr>
+            <tr>
+                <td><b>Food Priority</b></td>
+                <td>{{ object.food_priority}}</td>
+            </tr>
+            <tr>
+                <td><b>Food Tags</b></td>
+                <td>{% for tags in object.food_tags.all%}
+                      {{tags }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td><b>Is headline</b></td>
+                <td>{{ object.is_headline}}</td>
+            </tr>
+            <tr>
+                <td><b>Is sideline</b></td>
+                <td>{{ object.is_sideline}}</td>
+            </tr>
+            <tr>
+                <td><b>Is feature</b></td>
+                <td>{{ object.is_feature}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!--Section for the Recipe Detail-->
+        {% if  object.description%}
+          <h3>Description </h3>
+          <div style="padding-left:20px">
+            {{ object.description|safe }}
+          </div>
+        {% endif %}
+        {% if  object.instructions%}
+          <h3>Instructions </h3>
+          <div style="padding-left:20px">
+            {{ object.instructions|safe }}
+          </div>
+        {% endif %}
+        {% if  object.notes%}
+          <h3>Notes </h3>
+          <div style="padding-left:20px">
+            {{ object.notes|safe }}
+          </div>
+        {% endif %}
+
+        <!--Section for the gallery image-->
+        <h2>Gallery Images</h2>
+        {% if food_gallery %}
+        <div class="row">
+          {% for  image in food_gallery%}
+            <div class="col-md-4 img-thumbnail ml-2">
+              <div class="thumbnail">
+                <a href="{{image.image.url}}">
+                  <img src="{{ image.image.url }}" alt="Lights" style="width:100%;height:200px;">
+                  <div class="caption float-left mt-2">
+                      <a href="{% url 'food_app:admin-food-gallery-delete' image.id %}" class=" myModal btn  btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% endif%}
+
+    </div>
+  </div>
+{% endblock maincontent %}

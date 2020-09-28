@@ -1,0 +1,120 @@
+{% extends 'food/frontend/frontend_home.html' %}
+{% block maincontent %}
+
+   <!-- Single Recipe Section Begin -->
+    <section class="single-page-recipe spad">
+        <div class="recipe-top">
+            <div class="container-fluid">
+                <div class="recipe-title">
+                    <span>~ 5 ingredients / 20 minutes / easy / japanese/ recipe</span>
+                    <h2>{{object.name}}</h2>
+                    {% if object.food_tags %}
+                    <ul class="tags">
+                        {% for tags in object.food_tags.all%}
+                        <li>{{tags }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                {% if object.food_main_image%}
+                <img src="{{object.food_main_image.url}}" class="img-fluid" alt="">
+                {% endif %}
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="ingredients-item">
+                        <div class="intro-item">
+                            <img src="img/intro-img.jpg" alt="">
+                            <h2>{{object.name}}</h2>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="reviews">4.9 from 25 reviews</div>
+                            <div class="recipe-time">
+                                <ul>
+                                    <li>Prep time: <span>{{object.prep_time}} minutes</span></li>
+                                    <li>Cook time: <span>{{object.prep_time}} minutes</span></li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ingredient-list">
+                            <div class="recipe-btn">
+                                <a href="#">Print Recipe</a>
+                                <a href="#" class="black-btn">Pin Recipe</a>
+                            </div>
+                            <div class="list-item">
+                                <h5>Ingredients</h5>
+                                {{object.ingredients|safe}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nutrition-fact">
+                        <div class="nutri-title">
+                            <h6>Nutrition Facts</h6>
+                            <span>Serves 4</span>
+                        </div>
+                        <ul>
+                            <li>Total Fat : 20.4g</li>
+                            <li>Cholesterol : 2%</li>
+                            <li>Chalories: 345</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="recipe-right">
+                        <div class="recipe-desc">
+                            <h3>Description</h3>
+                            {{object.description|safe}}
+                        </div>
+                        {% if object.instructions %}
+                        <div class="instruction-list">
+                            <h3>Instructions</h3>
+                            {{object.instructions|safe}}
+                        </div>
+                        {%endif%}
+
+                        {% if object.notes %}
+                        <div class="notes">
+                            <h3>Notes</h3>
+                            <div class="notes-item">
+                                {{object.notes|safe}}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Single Recipe Section End -->
+
+        <!-- Similar Recipe Section Begin -->
+    <section class="similar-recipe spad">
+        <div class="container">
+            {% if similar_posts%}
+            <div class="row">
+                {% for food in similar_posts %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="similar-item">
+                            <a href="{%url 'food_app:frontend-recipe' food.id %}"><img src=""{{food.food_main_image.url}}"" style="height:100px;width:100px"alt=""></a>
+                            <div class="similar-text">
+                                <a href="{%url 'food_app:frontend-category' food.food_category.id %}"><div class="cat-name">{{food.food_category}}</div></a>
+                                <h6>{{food.name}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            </div>
+        </div>
+    </section>
+    <!-- Similar Recipe Section End -->
+    {% endblock%}

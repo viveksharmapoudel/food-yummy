@@ -1,0 +1,13 @@
+{% for food in category_foods|slice:":5" %}
+<div class="cf-item mix all mor">
+	<a href="{%url 'food_app:frontend-recipe' food.id %}">
+		<div class="cf-item-pic">
+            <img src="{{food.food_main_image.url}}" alt="">
+        </div>
+        <div class="cf-item-text">
+            <h5>{{food.name}}</h5>
+        </div>
+	</a>
+    
+</div>
+{% endfor%}

@@ -1,0 +1,19 @@
+
+<div class="modal-header " >
+      <h3 class="modal-title pull-right">Confirm Delete</h3>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<form class="form" action="{% url 'food_app:admin-message-us-delete' object.id %}" method="POST">{% csrf_token %}
+    <div class="modal-body confirm-delete">
+        <p>Are you sure you want to delete ?</p>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" value="Confirm" class="btn btn-danger">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</form>
+
+
+
+
+

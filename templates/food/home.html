@@ -1,0 +1,142 @@
+{% extends "food/base.html" %}
+{% load static %}
+{% block content %}
+
+    <div class="container-scroller">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo" href="../../index.html"><img src="{%static 'administration/assets/images/logo.svg'%}" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="{%static 'administration/assets/images/logo-mini.svg'%}" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          
+          <div class="search-field d-none d-xl-block">
+            <form class="d-flex align-items-center h-100" action="#">
+              <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                </div>
+                <input type="text" class="form-control bg-transparent border-0" placeholder="Search products">
+              </div>
+            </form>
+          </div>
+
+
+          <ul class="navbar-nav navbar-nav-right">
+          	<li>
+          		<div class= "btn btn-light">
+          			<a href="{% url 'food_app:admin-logout'%}" class="myModal">Logout</a>
+          		</div>
+          	</li>
+          </ul>
+
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-category">Main</li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'food_app:admin-page'%}">
+                <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'food_app:admin-food-list' %}">
+                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
+                <span class="menu-title">Food list</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'food_app:admin-category-list' %}">
+                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
+                <span class="menu-title">Categories</span>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'food_app:admin-tag-list' %}">
+                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
+                <span class="menu-title">Tags</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'food_app:admin-message-us-list' %}">
+                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
+                <span class="menu-title">Message Us</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'food_app:admin-our-contact-list' %}">
+                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
+                <span class="menu-title">Our Contact</span>
+              </a>
+            </li>
+        <!--
+            <li class="nav-item sidebar-user-actions">
+              <div class="sidebar-user-menu">
+                <a href="#" class="nav-link"><i class="mdi mdi-settings menu-icon"></i>
+                  <span class="menu-title">Settings</span>
+                </a>
+              </div>
+            </li>
+        -->
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+
+          		{% block maincontent %} 
+          		{% endblock %}
+          </div>
+          <!-- content-wrapper ends -->
+
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="footer-inner-wraper">
+              <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              </div>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+
+    <!--this if for deletion step -->
+
+
+	<!--This section for delete modal -->    
+    <div class="modal fade" id="theModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
